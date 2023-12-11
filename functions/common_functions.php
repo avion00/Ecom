@@ -645,7 +645,7 @@
 
                 $result = mysqli_query($con, $sql);
 
-                echo "<script>alert('Item is added to cart')</script>";
+                echo "<script>alert('Item is added to cart.')</script>";
                 echo "<script>window.open('index.php', '_self')</script>";
             }
         }
