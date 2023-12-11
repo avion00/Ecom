@@ -1,0 +1,240 @@
+:root {
+  --primary-color: #ac0cc4;
+  --secondary-color: #794afa;
+  --secondary-dark-color: #35023d;
+
+  --white-color: #fff;
+  --light-bg-color: #f2f3f5;
+  --light-text-color: #7c899a;
+  --border-color: #e5e8ec;
+  --dark-color: #0a021c;
+
+  --font-small: 13px;
+  --font-smaller: 11px;
+
+  --percent100: 100%;
+  --percent50: 50%;
+
+  --fw3: 300;
+  --fw5: 500;
+  --fw6: 600;
+  --fw7: 700;
+  --fw8: 800;
+
+  --trans-background-color: background-color 0.3s color 0.3s;
+  --trans-background: background-color 0.3s;
+  --trans-color: color 0.3s;
+}
+* {
+  font-family: rubik;
+}
+
+.registration {
+  display: flex;
+}
+
+.registration .wrapper {
+  width: 350px;
+  justify-content: center;
+  margin: 20px 0px;
+  padding: 30px;
+  /* border: 1px solid red; */
+  box-shadow: 1px 1px 15px 15px rgba(0, 0, 0, 0.01);
+  -webkit-box-shadow: 1px 1px 15px 15px rgba(0, 0, 0, 0.01);
+  -moz-box-shadow: 1px 1px 15px 15px rgba(0, 0, 0, 0.01);
+}
+h2 {
+  font-size: 2em;
+  margin-bottom: 40px;
+}
+
+.inputImage {
+  position: relative;
+  padding: 0;
+  font-size: var(--font-small);
+}
+
+.inputImage::file-selector-button {
+  padding: 14px 25px;
+  width: 130px;
+  cursor: pointer;
+  background-color: transparent;
+  border: 1px solid var(--border-color);
+  margin-right: 15px;
+  font-family: rubik;
+  font-size: var(--font-small);
+}
+
+.inputImage::before {
+  position: absolute;
+  pointer-events: none;
+  top: 15px;
+  left: 10px;
+  height: 15px;
+  width: 15px;
+  content: "";
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 12.5858L16.2426 16.8284L14.8284 18.2426L13 16.415V22H11V16.413L9.17157 18.2426L7.75736 16.8284L12 12.5858ZM12 2C15.5934 2 18.5544 4.70761 18.9541 8.19395C21.2858 8.83154 23 10.9656 23 13.5C23 16.3688 20.8036 18.7246 18.0006 18.9776L18.0009 16.9644C19.6966 16.7214 21 15.2629 21 13.5C21 11.567 19.433 10 17.5 10C17.2912 10 17.0867 10.0183 16.8887 10.054C16.9616 9.7142 17 9.36158 17 9C17 6.23858 14.7614 4 12 4C9.23858 4 7 6.23858 7 9C7 9.36158 7.03838 9.7142 7.11205 10.0533C6.91331 10.0183 6.70879 10 6.5 10C4.567 10 3 11.567 3 13.5C3 15.2003 4.21241 16.6174 5.81986 16.934L6.00005 16.9646L6.00039 18.9776C3.19696 18.7252 1 16.3692 1 13.5C1 10.9656 2.71424 8.83154 5.04648 8.19411C5.44561 4.70761 8.40661 2 12 2Z'%3E%3C/path%3E%3C/svg%3E");
+}
+
+.inputImage::file-selector-button:hover {
+  background-color: var(--border-color);
+}
+
+p {
+  font-size: small;
+  line-height: 1em;
+}
+
+p a {
+  color: var(--primary-color);
+  padding: 0 1.5em;
+}
+
+.registration .wrapper div {
+  display: flex;
+  justify-content: right;
+}
+
+.registration .wrapper div p:last-child {
+  margin-left: 20px;
+}
+
+.header-nav .wrapper .right .admin_image{
+  height: 60px;
+  width: 60px;
+  position: initial;
+  display: flex;
+}
+
+.header-nav .wrapper .right .admin_image img {
+  padding: 0.5em;
+  border-radius: 50%;
+  transition: transform 0.3s;
+
+}
+
+.header-nav .wrapper .right .admin_image img:hover{
+  transform: scale(1.1);
+}
+
+.header-nav{
+  border-bottom: 1px solid var(--border-color);
+}
+
+.header-nav .right ul{
+  margin-right: 10px;
+} 
+
+.header-nav .right ul li .secondary-button{
+  padding: 0.5em 1em;
+}
+
+.header-nav .right ul li .secondary-button:active{
+  color: var(--primary-color);
+}
+
+
+.product_info .wrapper .product_details .info{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.product_info .wrapper .product_details .info div{
+  margin: 0.5em 2em;
+  font-size: 0.8em;
+}
+
+.product_info .wrapper .product_details .info div :where(input, textarea){
+  margin: 0.5em 1em;
+  padding: 0.6em 1em;
+  background-color: var(--border-color);
+}
+.product_info .wrapper .product_details .info div :where(input, textarea):focus{
+  background-color: var(--white-color);
+}
+
+.product_info .wrapper .product_details .info .image .inputImage{
+    padding: 0;
+    border: 1px solid var(--light-text-color);
+    font-size: var(--font-smaller);
+}
+
+.product_info .wrapper .product_details .info .image .inputImage::file-selector-button:active{
+  background-color: var(--light-text-color);
+}
+
+.product_info .wrapper .product_details .info .image .inputImage::file-selector-button {
+    padding: 0.5em;
+    border: 1px solid var(--light-text-color); 
+    font-size: var(--font-smaller);
+}
+
+.product_info .wrapper .product_details .info .image .inputImage::before {
+  top: 6px;
+}
+.product_info .wrapper .product_details .info textarea{
+  height: 6em;
+  width:15em;
+  font-size: var(--font-small);
+}
+
+.product_info .wrapper .product_details .info .product_discription{
+  align-items: center;
+  display: flex;
+}
+
+.product_info .wrapper .product_details .primary-button{
+  margin:1em 3em;
+}
+
+.product_info .wrapper .info :where(.product_name, .product_model, .product_current_price, .product_normal_price, .image, .product_discription) label::after{
+  content: '*';
+  font-size: 16px;
+}
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media screen and (max-width: 992px){
+  .header-nav .right ul li a{
+    margin: 0 0.3em;
+  }
+
+  .header-nav .wrapper{
+    justify-content: center;
+  }
+
+  .header-nav .wrapper .right ul{
+    justify-content: center;
+  }
+
+
+}
+
+
+
+
+
+
+@media screen and (min-width: 639px) {
+  .registration .wrapper {
+    width: 500px;
+  }
+}
+
+
