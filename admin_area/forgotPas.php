@@ -16,10 +16,10 @@ include '../inc/config.php';
       href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
       rel="stylesheet"
     />
-    <link
+    <!-- <link
       rel="stylesheet"
       href="https://unpkg.com/swiper@8/swiper-bundle.min.css"
-    />
+    /> -->
   </head>
   <body>
     <div id="page" class="site page-single">
@@ -316,7 +316,7 @@ include '../inc/config.php';
 
 
     </div>
-    <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+    <!-- <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fslightbox/3.4.0/index.js"></script>
     <script src="../script.js?v=<?=$version?>"></script>
   </body>

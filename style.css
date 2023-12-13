@@ -999,11 +999,19 @@ n .products .hoverable li.active a:hover {
 .products.big .item {
   flex-direction: column;
   padding: 2.5em;
-  border: 2px solid var(--secondary-dark-color);
+  /* border: 2px solid var(--secondary-dark-color); */
   border-radius: 7px;
   max-width: 460px;
   margin: 0 auto;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+  transition: transform 0.3s;
 }
+.products.big .item:hover{
+  transform: scale(1.01);
+}
+
+
+
 
 /* 04. PRODUCT--------------------
             *     c. Mini product
@@ -1034,12 +1042,22 @@ n .products .hoverable li.active a:hover {
   flex-direction: column;
   flex: 0 0 100%;
   padding: 0 0.938em;
-  padding-bottom: 2em;
+  padding-bottom: 1em;
+  padding: 1em;
+
+    
 }
 
 .products.main .media {
   height: 390px;
+
 }
+
+.products.main .media:hover{
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2)inset;
+    border-radius: 10px; 
+}
+
 
 .products.main .footer {
   position: absolute;

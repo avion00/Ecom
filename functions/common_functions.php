@@ -269,6 +269,100 @@
     }
 ?>
 
+
+<?php
+
+    function search_input(){
+        global $con;
+        if (isset($_GET['search_button'])){
+            $search_data_value = $_GET['search_box'];
+            
+            echo "
+            <div class='breadcrumb'>
+            <ul class='flexitem'>
+                <li><a href='#'></a>Home</li>
+                <li>".$search_data_value."</li>
+            </ul>
+            </div>
+            <div class='page-title'>
+                <h1>".$search_data_value."</h1>
+            </div>
+            ";
+            }
+    }
+                                  
+?>
+
+<?php
+
+    function search_result(){
+        if (isset($_GET['search_button'])){
+            
+            $search_data_value = $_GET['search_box'];
+
+            // $sql = "SELECT * FROM `product_details` WHERE (product_name LIKE '%$search_data_value%') OR (product_description LIKE '%$search_data_value%')";
+            
+            $sql = "Select * from `product_details` where product_name like '%$search_data_value%'";
+            
+            $result = mysqli_query($con, $sql);
+
+            while ($row = mysqli_fetch_assoc($result)) {
+                $id = $row['id'];
+                $product_name = $row['product_name'];
+                $product_current_price = $row['product_current_price'];
+                $product_normal_price = $row['product_normal_price'];
+                $image1 = $row['image1'];
+
+                echo "
+
+                <div class='item'>
+                <div class='media'>
+                <div class='thumbnail object-cover'>
+                    <a  href='page-single.php?id=".$id."'>
+                    <img src='./images/products/".$image1."' alt='".$product_name."'/>
+                    </a>
+                </div>
+                <div class='hoverable'>
+                    <ul>
+                    <li class='active'><a href='#'><i class='ri-heart-line'></i></a></li>
+                    <li><a href='#'><i class='ri-eye-line'></i></a></li>
+                    <li><a href='#'><i class='ri-shuffle-line'></i></a></li>
+                    </ul>
+                </div>
+                <div class='discount circle flexcenter'>
+                    <span>".intval(((($product_normal_price - $product_current_price)/$product_normal_price)*100))."%</span>
+                </div>
+                </div>
+                <div class='content'>
+                <div class='rating'>
+                    <div class='stars'></div>
+                    <span class='mini-text'>(".intval(((($product_normal_price - $product_current_price)/$product_normal_price)*100)*120).")</span>
+                </div>
+
+                <h3><a href='page-single.php?id=".$id."'>".$product_name."</a></h3>
+                <div class='price'>
+                    <span class='current'>&#8377; ".$product_current_price."</span>
+                    <span class='normal mini-text'>&#8377; ".$product_normal_price."</span>
+                </div>
+                </div>
+            </div>";
+            }
+        }
+    }
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
 <?php
     function product_path(){
         global $con;
@@ -650,7 +744,54 @@
             }
         }
     }
+?>
 
+<?php
+    function cart_item(){
+        if (isset($_GET['add_to_cart'])){
+            global $con;
+            $get_ip_address = getIPAddress();
+
+            $sql = "select * from `cart_details` where ip_address = '$get_ip_address'";
+
+            $result = mysqli_query($con, $sql);
+
+            $count_cart_items = mysqli_num_rows($result);
+        }else{
+            global $con;
+            $get_ip_address = getIPAddress();
+
+            $sql = "select * from `cart_details` where ip_address = '$get_ip_address'";
+
+            $result = mysqli_query($con, $sql);
+
+            $count_cart_items = mysqli_num_rows($result);
+        }
+        echo $count_cart_items;
+    }
 ?>
 
 
+<?php
+// total price function
+function total_cart_price(){
+    global $con;
+
+    $get_ip_address = getIPAddress();
+    $total_price = 0;
+    $cart_query = "Select * from `cart_details` where ip_address = '$get_ip_address'";
+
+    $result = mysqli_query($con, $cart_query);
+    while($row = mysqli_fetch_array($result)){
+        $product_id = $row['id'];
+        $select_products = "select * from `product_details` where id = '$product_id'";
+        $result_products = mysqli_query($con, $select_products);
+        while($row_product_price = mysqli_fetch_array($result_products)){
+            $product_price = array($row_product_price['product_current_price']);
+            $product_values = array_sum($product_price);
+            $total_price += $product_values;
+        }
+    }
+    echo $total_price;
+}
+?>

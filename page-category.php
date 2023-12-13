@@ -1,6 +1,7 @@
 <?php
 include './inc/config.php';
 include './inc/connect.php';
+include './functions/common_functions.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,10 +14,10 @@ include './inc/connect.php';
       href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
       rel="stylesheet"
     />
-    <link
+    <!-- <link
       rel="stylesheet"
       href="https://unpkg.com/swiper@8/swiper-bundle.min.css"
-    />
+    /> -->
   </head>
   <body>
     <div id="page" class="site page-category">
@@ -283,23 +284,7 @@ include './inc/connect.php';
                     <div class="row">
                         <div class="cat-head">
                             
-                                <?php
-                                  if (isset($_GET['search_button'])){
-                                    $search_data_value = $_GET['search_box'];
-                                    
-                                    echo "
-                                    <div class='breadcrumb'>
-                                    <ul class='flexitem'>
-                                      <li><a href='#'></a>Home</li>
-                                      <li>".$search_data_value."</li>
-                                    </ul>
-                                    </div>
-                                    <div class='page-title'>
-                                        <h1>".$search_data_value."</h1>
-                                    </div>
-                                    ";
-                                  }
-                                  ?>
+                                <?php search_input(); ?>
                             
                             <div class="cat-description">
                                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis eius quaerat vitae nemo. Illo ipsum ullam impedit quis, corporis dolore sint asperiores neque ratione dolor itaque est consequuntur doloremque repellendus!</p>
@@ -347,63 +332,8 @@ include './inc/connect.php';
                     </div>
                     <div class="products main flexwrap">
                         <!-- products category structure copid from featured products start with .item -->
-                        <?php
-                          if (isset($_GET['search_button'])){
-                            
-                            $search_data_value = $_GET['search_box'];
-
-                            // $sql = "SELECT * FROM `product_details` WHERE (product_name LIKE '%$search_data_value%') OR (product_description LIKE '%$search_data_value%')";
-                            
-                            $sql = "Select * from `product_details` where product_name like '%$search_data_value%'";
-                          
-                            $result = mysqli_query($con, $sql);
-
-                            while ($row = mysqli_fetch_assoc($result)) {
-                                $id = $row['id'];
-                                $product_name = $row['product_name'];
-                                $product_current_price = $row['product_current_price'];
-                                $product_normal_price = $row['product_normal_price'];
-                                $image1 = $row['image1'];
-
-                                echo "
-
-                                <div class='item'>
-                              <div class='media'>
-                                <div class='thumbnail object-cover'>
-                                  <a  href='page-single.php?id=".$id."'>
-                                    <img src='./images/products/".$image1."' alt='".$product_name."'/>
-                                  </a>
-                                </div>
-                                <div class='hoverable'>
-                                  <ul>
-                                    <li class='active'><a href='#'><i class='ri-heart-line'></i></a></li>
-                                    <li><a href='#'><i class='ri-eye-line'></i></a></li>
-                                    <li><a href='#'><i class='ri-shuffle-line'></i></a></li>
-                                  </ul>
-                                </div>
-                                <div class='discount circle flexcenter'>
-                                  <span>".intval(((($product_normal_price - $product_current_price)/$product_normal_price)*100))."%</span>
-                                </div>
-                              </div>
-                              <div class='content'>
-                                <div class='rating'>
-                                  <div class='stars'></div>
-                                  <span class='mini-text'>(".intval(((($product_normal_price - $product_current_price)/$product_normal_price)*100)*120).")</span>
-                                </div>
-
-                                <h3><a href='page-single.php?id=".$id."'>".$product_name."</a></h3>
-                                <div class='price'>
-                                  <span class='current'>&#8377; ".$product_current_price."</span>
-                                  <span class='normal mini-text'>&#8377; ".$product_normal_price."</span>
-                                </div>
-                              </div>
-                            </div>";
-                            }
-                          }
-                        ?>  
-
-
-
+                        
+                        <?php search_result();?>
 
                     </div>
                     <div class="load-more flexcenter">
@@ -615,7 +545,7 @@ include './inc/connect.php';
 
       <div class="overlay"></div>
     </div>
-    <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+    <!-- <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fslightbox/3.4.0/index.js"></script>
     <script src="script.js?v=<?=$version?>"></script>
 
