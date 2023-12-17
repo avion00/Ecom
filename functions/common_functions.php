@@ -63,8 +63,8 @@
                 <a href='page-single.php?id=".$id."'>".$product_name."</a>
             </h3>
             <div class='price'>
-                <span class='current'>&#8377; ".$product_current_price."</span>
-                <span class='normal mini-text'>&#8377; ".$product_normal_price."</span>
+                <span class='current'>&#8377; ".number_format($product_current_price, 0, '.', ',')."</span>
+                <span class='normal mini-text'>&#8377; ".number_format($product_normal_price, 0, '.', ',')."</span>
             </div>
 
             <div class='stock mini-text'>
@@ -134,8 +134,8 @@
                 </div>
 
                 <div class='price'>
-                <span class='current'>&#8377; ".$product_current_price."</span>
-                <div class='normal mini-text'>&#8377; ".$product_normal_price."</div>
+                <span class='current'>&#8377; ".number_format($product_current_price, 0, '.', ',')."</span>
+                <div class='normal mini-text'>&#8377; ".number_format($product_normal_price, 0, '.', ',')."</div>
                 </div>
 
                 <div class='mini-text'>
@@ -200,8 +200,8 @@
                 </div>
 
                 <div class='price'>
-                    <span class='current'>&#8377; ".$product_current_price."</span>
-                    <div class='normal mini-text'>&#8377; ".$product_normal_price."</div>
+                    <span class='current'>&#8377; ".number_format($product_current_price, 0, '.', ',')."</span>
+                    <div class='normal mini-text'>&#8377; ".number_format($product_normal_price, 0, '.', ',')."</div>
                 </div>
 
                 <div class='mini-text'>
@@ -260,8 +260,8 @@
 
                 <h3><a href='page-single.php?id=".$id."'>".$product_name."</a></h3>
                 <div class='price'>
-                    <span class='current'>&#8377; ".$product_current_price."</span>
-                    <span class='normal mini-text'>&#8377; ".$product_normal_price."</span>
+                    <span class='current'>&#8377; ".number_format($product_current_price, 0, '.', ',')."</span>
+                    <span class='normal mini-text'>&#8377; ".number_format($product_normal_price, 0, '.', ',')."</span>
                 </div>
                 </div>
             </div>";                
@@ -296,6 +296,7 @@
 <?php
 
     function search_result(){
+        global $con;
         if (isset($_GET['search_button'])){
             
             $search_data_value = $_GET['search_box'];
@@ -341,8 +342,8 @@
 
                 <h3><a href='page-single.php?id=".$id."'>".$product_name."</a></h3>
                 <div class='price'>
-                    <span class='current'>&#8377; ".$product_current_price."</span>
-                    <span class='normal mini-text'>&#8377; ".$product_normal_price."</span>
+                    <span class='current'>&#8377; ".number_format($product_current_price, 0, '.', ',')."</span>
+                    <span class='normal mini-text'>&#8377; ".number_format($product_normal_price, 0, '.', ',')."</span>
                 </div>
                 </div>
             </div>";
@@ -485,8 +486,8 @@
                     <span class='sku mini-text'>".$product_model."</span>
                     </div>
                     <div class='price'>
-                    <span class='current'>&#8377; ".$product_current_price."</span>
-                    <span class='normal'>&#8377; ".$product_normal_price."</span>
+                    <span class='current'>&#8377; ".number_format($product_current_price, 0, '.', ',')."</span>
+                    <span class='normal'>&#8377; ".number_format($product_normal_price, 0, '.', ',')."</span>
                     </div>
                 ";
             }
@@ -625,8 +626,8 @@
 
                         <h3><a href='page-single.php?id=".$id."'>".$product_name."</a></h3>
                         <div class='price'>
-                            <span class='current'>&#8377; ".$product_current_price."</span>
-                            <span class='normal mini-text'>&#8377; ".$product_normal_price."</span>
+                            <span class='current'>&#8377; ".number_format($product_current_price, 0, '.', ',')."</span>
+                            <span class='normal mini-text'>&#8377; ".number_format($product_normal_price, 0, '.', ',')."</span>
                         </div>
                     </div>
                 </div>";
@@ -792,6 +793,6 @@ function total_cart_price(){
             $total_price += $product_values;
         }
     }
-    echo $total_price;
+    echo number_format($total_price, 0, '.', ',');
 }
 ?>

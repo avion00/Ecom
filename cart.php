@@ -70,17 +70,45 @@ include './functions/common_functions.php';
                           </tr>
                         </thead>
                         <tbody>
+
+                          <!-- here we write dynamic php code -->
+
+                          <?php
+                          global $con;
+                          $get_ip_address = getIPAddress();
+                          $total_price = 0;
+                          $cart_query = "Select * from `cart_details` where ip_address = '$get_ip_address'";
+
+                          $result = mysqli_query($con, $cart_query);
+                          while($row = mysqli_fetch_array($result)){
+                              $product_id = $row['id'];
+                              $select_products = "select * from `product_details` where id = '$product_id'";
+                              $result_products = mysqli_query($con, $select_products);
+                              while($row_product_price = mysqli_fetch_array($result_products)){
+                                $product_price = array($row_product_price['product_current_price']);
+
+                                $price_table = $row_product_price['product_current_price'];
+                                $product_title = $row_product_price['product_name'];
+                                $product_image = $row_product_price['image1'];
+                                
+                                $product_values = array_sum($product_price);
+                                $total_price += $product_values;
+                            
+                          
+                          ?>
+
                           <tr>
                             <td class="flexitem">
                                 <div class="thumbnail object-cover">
-                                    <a href="#"><img src="assets/products/home2.jpg" alt=""></a>
+                                    <a href="#"><img src="./images/products/<?php echo $product_image?>" alt=""></a>
                                 </div>
                                 <div class="content">
-                                    <strong><a href="#">Dimmable Ceiling Light Modern</a></strong>
+                                    <strong><a href="#"><?php echo strlen($product_title) > 20 ? substr($product_title, 0, 50) . ' ...' : $product_title?></a></strong>
+                                    
                                     <p>Color: Gold</p>
                                 </div>
                             </td>
-                            <td>$279.99</td>
+                            <td><?php echo "&#8377;" . number_format($price_table, 0, '.', ',')  ?></td>
                             <td>
                                 <div class="qty-control flexitem">
                                     <button class="minus">-</button>
@@ -92,71 +120,10 @@ include './functions/common_functions.php';
                             <td><a href="#" class="item-remove"><i class="ri-close-line"></i></a></td>
                           </tr>
 
-                          <tr>
-                            <td class="flexitem">
-                                <div class="thumbnail object-cover">
-                                    <a href="#"><img src="assets/products/home3.jpg" alt=""></a>
-                                </div>
-                                <div class="content">
-                                    <strong><a href="#">Modern Storage Cabinet with Door & 3 Drawers</a></strong>
-                                    <p>Type: Stand</p>
-                                </div>
-                            </td>
-                            <td>$129.99</td>
-                            <td>
-                                <div class="qty-control flexitem">
-                                    <button class="minus">-</button>
-                                    <input type="text" value="2" min="1">
-                                    <button class="plus">+</button>
-                                </div>
-                            </td>
-                            <td>$129.99</td>
-                            <td><a href="#" class="item-remove"><i class="ri-close-line"></i></a></td>
-                          </tr>
-
-                          <tr>
-                            <td class="flexitem">
-                                <div class="thumbnail object-cover">
-                                    <a href="#"><img src="assets/products/home4.jpg" alt=""></a>
-                                </div>
-                                <div class="content">
-                                    <strong><a href="#">Vonanda Velvet Sofa Couch</a></strong>
-                                    <!-- <p>Color: Gold</p> -->
-                                </div>
-                            </td>
-                            <td>$352.99</td>
-                            <td>
-                                <div class="qty-control flexitem">
-                                    <button class="minus">-</button>
-                                    <input type="text" value="2" min="1">
-                                    <button class="plus">+</button>
-                                </div>
-                            </td>
-                            <td>$352.99</td>
-                            <td><a href="#" class="item-remove"><i class="ri-close-line"></i></a></td>
-                          </tr>
-
-                          <tr>
-                            <td class="flexitem">
-                                <div class="thumbnail object-cover">
-                                    <a href="#"><img src="assets/products/home5.jpg" alt=""></a>
-                                </div>
-                                <div class="content">
-                                    <strong><a href="#">Awesome Bed for a couple</a></strong>
-                                    <p>Type: Kind Size</p>
-                                </div>
-                            </td>
-                            <td>$579.99</td>
-                            <td>
-                                <div class="qty-control flexitem">
-                                    <button class="minus">-</button>
-                                    <input type="text" value="2" min="1">
-                                    <button class="plus">+</button>
-                                </div>
-                            </td>
-                            <td>$579.99</td>
-                            <td><a href="#" class="item-remove"><i class="ri-close-line"></i></a></td>
-                          </tr>
+                          <?php 
+                              }
+                            } 
+                          ?>
                           
                         </tbody>
                       </table>
@@ -212,13 +179,13 @@ include './functions/common_functions.php';
                             <div class="rate-options variant">
                               <form action="">
                                 <p>
-                                  <span>Flat: $10.00</span>
+                                  <span>Flat: &#8377; 10.00</span>
                                   <input type="radio" name="rate-option" id="flat" checked>
                                   <label for="flat" class="circle"></label>
                                 </p>
 
                                 <p>
-                                  <span>Best: $0.00</span>
+                                  <span>Best: &#8377; 0.00</span>
                                   <input type="radio" name="rate-option" id="best">
                                   <label for="best" class="circle"></label>
                                 </p>
@@ -233,19 +200,19 @@ include './functions/common_functions.php';
                           <tbody>
                             <tr>
                               <th>Subtotal</th>
-                              <td>$2155.95</td>
+                              <td><?php echo "&#8377; " . number_format($total_price, 0, '.', ',')  ?></td>
                             </tr>
                             <tr>
                               <th>Discount</th>
-                              <td>$100.00</td>
+                              <td>2 %</td>
                             </tr>
                             <tr>
                               <th>Shipping <span class="mini-text">(Flat)</span></th>
-                              <td>$10.00</td>
+                              <td>&#8377; 10</td>
                             </tr>
                             <tr class="grand-total">
                               <th>TOTAL</th>
-                              <td>$2065.95</td>
+                              <td><?php echo "&#8377; ".number_format(($total_price - (0.02*$total_price) - 10), 0, '.', ',')?></td>
                             </tr>
                           </tbody>
                         </table>
@@ -261,73 +228,12 @@ include './functions/common_functions.php';
       </main>
       <!-- main -->
 
-<?php include_once('./footer.php'); ?>
+    <?php include_once('./footer.php'); ?>
       <!-- footer -->
 
-      <div class="menu-bottom desktop-hide">
-        <div class="container">
-          <div class="wrapper">
-            <nav>
-              <ul class="flexitem">
-                <li>
-                  <a href="#">
-                    <i class="ri-bar-chart-line"></i>
-                    <span>Trending</span>
-                  </a>
-                </li>
+    <?php include_once('./deskHideMenu.php') ?>
+      <!-- menu bottom and search button-->
 
-                <li>
-                  <a href="#">
-                    <i class="ri-user-6-line"></i>
-                    <span>Account</span>
-                  </a>
-                </li>
-
-                <li>
-                  <a href="#">
-                    <i class="ri-heart-line"></i>
-                    <span>Wishlist</span>
-                  </a>
-                </li>
-
-                <li>
-                  <a href="#0" class="t-search">
-                    <i class="ri-search-line"></i>
-                    <span>Search</span>
-                  </a>
-                </li>
-
-                <li>
-                  <a href="#0" class="cart-trigger">
-                    <i class="ri-shopping-cart-line"></i>
-                    <span>Cart</span>
-                    <div class="fly-item">
-                      <span class="item-number">0</span>
-                    </div>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </div>
-      <!-- menu bottom -->
-
-      <div class="search-bottom desktop-hide">
-        <div class="container">
-          <div class="wrapper">
-            <form action="" class="search">
-              <a href="" class="t-close search-close flexcenter"
-                ><i class="ri-close-line"></i
-              ></a>
-              <span class="icon-large"><i class="ri-search-line"></i></span>
-              <input type="search" placeholder="Search" required />
-              <button type="submit">Search</button>
-            </form>
-          </div>
-        </div>
-      </div>
-      <!-- search bottom -->
 
       <div class="backtotop">
         <a href="#" class="flexcol">

@@ -1,5 +1,9 @@
 <?php
 include './inc/config.php';
+include './inc/connect.php';
+include './functions/common_functions.php';
+
+
 ?>
 
 <!DOCTYPE html>
@@ -287,6 +291,7 @@ include './inc/config.php';
         </div>
       </div>
       <!-- search bottom -->
+      
 
       <div id="modal" class="modal">
         <div class="content flexcol">
