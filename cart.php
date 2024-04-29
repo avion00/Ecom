@@ -57,7 +57,7 @@ include './functions/common_functions.php';
               </div>
               <div class="products one cart">
                 <div class="flexwrap">
-                  <form action="" class="form-cart">
+                  <form action="" method="post" class="form-cart">
                     <div class="item">
                       <table id="cart-table">
                         <thead>
@@ -67,65 +67,103 @@ include './functions/common_functions.php';
                             <th>Qty</th>
                             <th>Subtotal</th>
                             <th></th>
+                            <th></th>
+                            
                           </tr>
                         </thead>
                         <tbody>
+                <!-- Display cart items dynamically -->
+                <?php
+                global $con;
+                $get_ip_address = getIPAddress();
+                $total_price = 0;
+                $cart_query = "SELECT * FROM `cart_details` WHERE ip_address = '$get_ip_address'";
+                $result = mysqli_query($con, $cart_query);
 
-                          <!-- here we write dynamic php code -->
+                while ($row = mysqli_fetch_array($result)) {
+                    $product_id = $row['id'];
+                    $select_products = "SELECT * FROM `product_details` WHERE id = '$product_id'";
+                    $result_products = mysqli_query($con, $select_products);
 
-                          <?php
-                          global $con;
-                          $get_ip_address = getIPAddress();
-                          $total_price = 0;
-                          $cart_query = "Select * from `cart_details` where ip_address = '$get_ip_address'";
+                    while ($row_product_price = mysqli_fetch_array($result_products)) {
+                        $product_price = array($row_product_price['product_current_price']);
+                        $price_table = $row_product_price['product_current_price'];
+                        
+                        $product_title = $row_product_price['product_name'];
+                        $product_image = $row_product_price['image1'];
+                        $product_values = array_sum($product_price);
 
-                          $result = mysqli_query($con, $cart_query);
-                          while($row = mysqli_fetch_array($result)){
-                              $product_id = $row['id'];
-                              $select_products = "select * from `product_details` where id = '$product_id'";
-                              $result_products = mysqli_query($con, $select_products);
-                              while($row_product_price = mysqli_fetch_array($result_products)){
-                                $product_price = array($row_product_price['product_current_price']);
+                        $total_price += $product_values;
+                ?>
+            <tr>
+                <td class="flexitem">
+                    <div class="thumbnail object-cover">
+                        <a href="#"><img src="./images/products/<?php echo $product_image ?>" alt=""></a>
+                    </div>
+                    <div class="content">
+                        <strong><a href="#"><?php echo strlen($product_title) > 20 ? substr($product_title, 0, 50) . ' ...' : $product_title ?></a></strong>
+                        <p>Color: Gold</p>
+                    </div>
+                </td>
+                <td><?php echo "&#8377;" . number_format($price_table, 0, '.', ',') ?></td>
+                <td>
+                    <div class="qty-control flexitem">
+                        <!-- <button class="minus" data-product-id="">-</button> -->
+                        <input type="text" name="qty" class="qty-input">
+                        <!-- <button class="plus" data-product-id="">+</button> -->
+                    </div>
+                </td>
 
-                                $price_table = $row_product_price['product_current_price'];
-                                $product_title = $row_product_price['product_name'];
-                                $product_image = $row_product_price['image1'];
-                                
-                                $product_values = array_sum($product_price);
-                                $total_price += $product_values;
-                            
-                          
-                          ?>
+                <?php
+                  $get_ip_address = getIPAddress();
+                    if (isset($_POST['update_cart'])) {
+                      $quantities = $_POST['qty'];
+                      
+                      $update_cart = "UPDATE `cart_details` SET quantity = '$quantities' WHERE ip_address = '$get_ip_address'";
+                      $result_products_quantity = mysqli_query($con, $update_cart);
+                      $total_price = $total_price * $quantities;
+                    }
+                  ?>
 
-                          <tr>
-                            <td class="flexitem">
-                                <div class="thumbnail object-cover">
-                                    <a href="#"><img src="./images/products/<?php echo $product_image?>" alt=""></a>
-                                </div>
-                                <div class="content">
-                                    <strong><a href="#"><?php echo strlen($product_title) > 20 ? substr($product_title, 0, 50) . ' ...' : $product_title?></a></strong>
-                                    
-                                    <p>Color: Gold</p>
-                                </div>
-                            </td>
-                            <td><?php echo "&#8377;" . number_format($price_table, 0, '.', ',')  ?></td>
-                            <td>
-                                <div class="qty-control flexitem">
-                                    <button class="minus">-</button>
-                                    <input type="text" value="2" min="1">
-                                    <button class="plus">+</button>
-                                </div>
-                            </td>
-                            <td>$559.98</td>
-                            <td><a href="#" class="item-remove"><i class="ri-close-line"></i></a></td>
-                          </tr>
 
-                          <?php 
-                              }
-                            } 
-                          ?>
-                          
-                        </tbody>
+                <td class="subtotal"><?php echo "&#8377;" . number_format($total_price, 0, '.', ',') ?></td>
+                <td><a href="#" class="item-update"><button style="border:none; display:none; background:transparent; cursor:pointer;" name="update_cart" type="submit"><i class="ri-refresh-line"></i></button></a></td>
+                
+                <td>
+                  <input type="checkbox" name="removeitem[]" value="<?php echo $product_id ?>">
+                  <a href="#" class="item-remove"><button style="border:none; background:transparent; cursor:pointer;" name="remove_cart" type="submit"><i class="ri-close-line"></i></button></a></td>
+      
+            </tr>
+    <?php
+        }
+    }
+    ?>
+
+    <?php
+                    function remove_cart_item(){
+                      global $con;
+                      if (isset($_POST['remove_cart'])){
+                        foreach($_POST['removeitem'] as $remove_id){
+
+                        
+                        echo $remove_id;
+                        $delete_query = "DELETE from `cart_details` where product_id = $remove_id";
+                        $run_delete = mysqli_query($con, $delete_query);
+                        if($run_delete){
+                          echo "<script>window.open('cart.php','_self')</script>";
+                        }
+
+                      }
+                      }
+                    }
+
+                    echo $remove_item = remove_cart_item();
+
+                  ?>
+</tbody>
+
+
+
                       </table>
                     </div>
                   </form>
@@ -216,7 +254,7 @@ include './functions/common_functions.php';
                             </tr>
                           </tbody>
                         </table>
-                        <a href="/checkout" class="secondary-button">Checkout</a>
+                        <a href="checkout.php" class="secondary-button">Checkout</a>
                       </div>
                     </div>
                   </div>

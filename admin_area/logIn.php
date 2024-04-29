@@ -269,12 +269,12 @@ include '../inc/config.php';
 
                           <p>
                           <!-- <label>Mobile Number: </label> -->
-                          <input placeholder="Mobile Number" type="number">
+                          <input placeholder="Mobile Number or Gmail" type="number" required>
                           </p>
 
                           <p>
                           <!-- <label>Password: </label> -->
-                          <input placeholder="Password" type="password">
+                          <input placeholder="Password"  pattern="/^[a-zA-Z0-9!@#\$%\^\&*_=+-]{8,12}$/g"  type="password" required>
                           </p>
 
                           <p>

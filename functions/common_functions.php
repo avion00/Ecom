@@ -355,15 +355,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
 <?php
     function product_path(){
         global $con;
@@ -522,6 +513,8 @@
         }
     }
 ?>
+
+
 
 
 
@@ -694,11 +687,9 @@
     // getting ip address
     function getIPAddress() {  
         global $con;
-    //whether ip is from the share internet  
         if(!empty($_SERVER['HTTP_CLIENT_IP'])) {  
                 $ip = $_SERVER['HTTP_CLIENT_IP'];  
         }  
-        //whether ip is from the proxy  
         elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {  
                 $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];  
         }  
@@ -736,7 +727,7 @@
 
                 values 
                 
-                ('$get_product_id', '$get_ip_address', 0)";
+                ('$get_product_id', '$get_ip_address', 1)";
 
                 $result = mysqli_query($con, $sql);
 
@@ -796,3 +787,34 @@ function total_cart_price(){
     echo number_format($total_price, 0, '.', ',');
 }
 ?>
+
+
+
+<?php
+// total price function
+function quantitiess(){
+    global $con;
+
+    $get_ip_address = getIPAddress();
+    $cart_query = "Select * from `cart_details` where ip_address = '$get_ip_address'";
+
+    $result = mysqli_query($con, $cart_query);
+    while($row = mysqli_fetch_array($result)){
+        $product_id = $row['id'];
+        $select_products = "select * from `product_details` where id = '$product_id'";
+        $result_products = mysqli_query($con, $select_products);
+        while($row_product_price = mysqli_fetch_array($result_products)){
+            $product_price = array($row_product_price['product_current_price']);
+            $product_values = array_sum($product_price);
+            $total_price += $product_values;
+        }
+    }
+    echo number_format($total_price, 0, '.', ',');
+}
+?>
+
+
+
+
+
+

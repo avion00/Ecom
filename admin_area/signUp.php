@@ -267,17 +267,17 @@ include '../inc/config.php';
                     <form action="">
                           <p>
                             <!-- <label>Full Name</label> -->
-                            <input placeholder="Full Name" type="text" requried>
+                            <input placeholder="Full Name"  pattern="[A-Za-z]{3}" type="text" requried>
                           </p>
                           
                           <p>
                             <!-- <label>Gmail: </label> -->
-                            <input placeholder="Gmail" type="gmail" required>
+                            <input placeholder="Gmail" pattern="^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$" type="gmail" required>
                           </p>
 
                           <p>
                             <!-- <label>Mobile Number: </label> -->
-                            <input placeholder="Mobile Number" type="number" required>
+                            <input placeholder="Mobile Number" pattern="[789][0-9]{9}" type="number" required>
                           </p>
 
                           <!-- <p>
@@ -288,12 +288,12 @@ include '../inc/config.php';
 
                           <p>
                             <!-- <label>Password: </label> -->
-                            <input placeholder="Password" type="password" required>
+                            <input placeholder="Password"  pattern="/^[a-zA-Z0-9!@#\$%\^\&*_=+-]{8,12}$/g"  type="password" required>
                           </p>
 
                           <p>
                             <!-- <label>Confirm password: </label> -->
-                            <input placeholder="Confirm password" type="password" required>
+                            <input placeholder="Confirm password"  pattern="/^[a-zA-Z0-9!@#\$%\^\&*_=+-]{8,12}$/g" type="password" required>
                           </p>
                           
                           <p class="">

@@ -2836,6 +2836,8 @@ input[type="range"]::-webkit-slider-thumb {
 
   .products.cart {
     display: flex;
+    width: 100%;
+    flex-direction: column;
   }
 
   .products.cart .form-cart {
@@ -2848,3 +2850,4 @@ input[type="range"]::-webkit-slider-thumb {
     margin-top: 0;
   }
 }
+

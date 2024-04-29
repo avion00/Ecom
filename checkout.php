@@ -12,7 +12,7 @@ include './functions/common_functions.php';
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Avikesh</title>
-    <link rel="stylesheet" href="style.css?v=<?=$version?>" />
+    <link rel="stylesheet" href="style.css?v=<?=$version?>"/>
     <link
       href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
       rel="stylesheet"
@@ -41,6 +41,11 @@ include './functions/common_functions.php';
       </aside>
 
 <?php include_once('./header.php'); ?>
+
+<?php
+// include('users')
+
+?>
 
       <main>
         
@@ -124,13 +129,69 @@ include './functions/common_functions.php';
                     <h2>Shipping Methods</h2>
                     <p class="checkset">
                       <input type="radio" checked>
-                      <label>$5.00 Flate Rate</label>
+                      <label>5.00 Flate Rate</label>
                     </p>
                   </div>
                   <div class="primary-checkout">
-                    <button class="primary-button">Place Order</button>
+                    <button class="primary-button"><a href="admin_area/signUp.php">Place Order</a></button>
                   </div>
                 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<?php
+                global $con;
+                $get_ip_address = getIPAddress();
+                $total_price = 0;
+                $cart_query = "SELECT * FROM `cart_details` WHERE ip_address = '$get_ip_address'";
+                $result = mysqli_query($con, $cart_query);
+
+                while ($row = mysqli_fetch_array($result)) {
+                    $product_id = $row['id'];
+                    $select_products = "SELECT * FROM `product_details` WHERE id = '$product_id'";
+                    $result_products = mysqli_query($con, $select_products);
+
+                    while ($row_product_price = mysqli_fetch_array($result_products)) {
+                        $product_price = array($row_product_price['product_current_price']);
+                        $price_table = $row_product_price['product_current_price'];
+                        $product_values = array_sum($product_price);
+
+                        $total_price += $product_values;
+              
+
+
+                
+                  
+                  ?>
+
+<?php
+               }
+              }
+?>
+
+
+
+
+
+
+
+
+
+
+
                 <div class="item right">
                   <h2>Order Summary</h2>
                   <div class="summary-order is_sticky">
@@ -138,41 +199,107 @@ include './functions/common_functions.php';
                       <ul>
                         <li>
                           <span>Subtotal</span>
-                          <span>$2155.95</span>
+                          <span><?php echo "&#8377; " . number_format($total_price, 0, '.', ',')  ?></span>
                         </li>
 
                         <li>
                           <span>Discount</span>
-                          <span>$100.00</span>
+                          <span>2 %</span>
                         </li>
 
                         <li>
                           <span>Shipping: Flat</span>
-                          <span>$10.00</span>
+                          <span> 10.00</span>
                         </li>
 
                         <li>
                           <span>Total</span>
-                          <strong>$2065.95</strong>
+                          <strong><?php echo "&#8377; ".number_format(($total_price - (0.02*$total_price) - 10), 0, '.', ',')?></strong>
                         </li>
 
                       </ul>
                     </div>
                     <ul class="products mini">
-                      <li class="item">
+
+
+
+
+
+
+
+
+
+
+                    <?php
+                global $con;
+                $get_ip_address = getIPAddress();
+                $total_price = 0;
+                $cart_query = "SELECT * FROM `cart_details` WHERE ip_address = '$get_ip_address'";
+                $result = mysqli_query($con, $cart_query);
+
+                while ($row = mysqli_fetch_array($result)) {
+                    $product_id = $row['id'];
+                    $select_products = "SELECT * FROM `product_details` WHERE id = '$product_id'";
+                    $result_products = mysqli_query($con, $select_products);
+
+                    while ($row_product_price = mysqli_fetch_array($result_products)) {
+                        $product_price = array($row_product_price['product_current_price']);
+                        $price_table = $row_product_price['product_current_price'];
+                        
+                        $product_title = $row_product_price['product_name'];
+                        $product_image = $row_product_price['image1'];
+                        $product_values = array_sum($product_price);
+
+                        $total_price += $product_values;
+              
+
+
+                
+                  $get_ip_address = getIPAddress();
+                    if (isset($_POST['update_cart'])) {
+                      $quantities = $_POST['qty'];
+                      
+                      $update_cart = "UPDATE `cart_details` SET quantity = '$quantities' WHERE ip_address = '$get_ip_address'";
+                      $result_products_quantity = mysqli_query($con, $update_cart);
+                      $total_price = $total_price * $quantities;
+                    }
+                  ?>
+
+                  <li class="item">
                         <div class="thumbnail object-cover">
-                          <img src="assets/products/home2.jpg" alt="">
+                          <img src="./images/products/<?php echo $product_image ?>" alt="">
                         </div>
                         <div class="item-content">
-                          <p>Dimmable Ceiling Light Modern</p>
+                          <p>$product_title</p>
                           <span class="price">
-                            <span>$279.00</span>
-                            <span>x 2</span>
+                            <span><?php echo "&#8377; " . number_format($price_table, 0, '.', ',')  ?></span>
+                            <span><?php echo $quantities?></span>
                           </span>
                         </div>
                       </li>
 
-                      <li class="item">
+
+<?php
+               }
+              }
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                      
+
+                      <!-- <li class="item">
                         <div class="thumbnail object-cover">
                           <img src="assets/products/home3.jpg" alt="">
                         </div>
@@ -209,13 +336,15 @@ include './functions/common_functions.php';
                             <span>x 1</span>
                           </span>
                         </div>
-                      </li>
+                      </li> -->
 
                       
 
                     </ul>
                   </div>
                 </div>
+
+
               </div>
             </div>
           </div>

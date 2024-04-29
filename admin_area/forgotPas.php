@@ -272,7 +272,7 @@ include '../inc/config.php';
                         
                         <p>
                             <!-- <label>Email or Mobile Number: </label> -->
-                            <input placeholder="Email or Mobile Number" type="text" name="userInput" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Enter a valid email address or number" required>
+                            <input placeholder="Email or Mobile Number" type="text" name="userInput" pattern="^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$" title="Enter a valid email address or number" required>
                         </p>
 
                         <div>
