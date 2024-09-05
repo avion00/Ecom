@@ -558,7 +558,7 @@ form.search button:hover {
             *-------------------*/
 .site-off {
   position: fixed;
-  width: 320px;
+  width: 380px;
   height: var(--percent100);
   background-color: var(--white-color);
   overflow-y: auto;
